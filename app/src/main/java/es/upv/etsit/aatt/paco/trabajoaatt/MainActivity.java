@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Codigo de respuesta: " + responseCode);
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(
-                        // Presumiblemente, la codificación de la respuesta es ISO-8859-15
-                        new InputStreamReader(conn.getInputStream() , "ISO-8859-15" ));
+                        // Presumiblemente, la codificación de la respuesta es utf-8
+                        new InputStreamReader(conn.getInputStream() , "utf-8" ));
                 String output;
                 response = new StringBuffer();
 
