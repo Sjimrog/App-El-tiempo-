@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ActivityMun">
+
+    <Spinner
+        android:id="@+id/spinner_mun"
+        android:layout_width="246dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="96dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -13,25 +23,12 @@
 
         android:layout_marginStart="60dp"
         android:layout_marginLeft="60dp"
-        android:layout_marginTop="396dp"
-        android:onClick="Next"
+        android:layout_marginTop="276dp"
         android:text="@string/BotonSiguiente"
         android:textStyle="bold"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spiner_prov"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_mun"
         tools:text="@string/BotonSiguiente" />
-
-    <Spinner
-        android:id="@+id/spiner_prov"
-        android:layout_width="248dp"
-        android:layout_height="43dp"
-
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="124dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
