@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -21,12 +22,18 @@ public class ActivityDias extends AppCompatActivity {
 
     private static final String TAG = "API_REST";
 
-    private String id_M;
+    public String id_M;
+    public String fecha;
+
+    private TextView tv;
+    public String pueblo, provincia, est_cielo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dias);
+
+        tv = (TextView)findViewById(R.id.tvfecha);
 
         id_M = getIntent().getStringExtra("Municipio");
         String key = "?api_key=" + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4YmVyY29yQHRlbGVjby51cHYuZXMiLCJqdGkiOiJmNGFkMzE4Ni1kNDE1LTQ3NTAtYmMwNS02MTAzOWIxMzU0YmEiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY1Mjk0OTUzMywidXNlcklkIjoiZjRhZDMxODYtZDQxNS00NzUwLWJjMDUtNjEwMzliMTM1NGJhIiwicm9sZSI6IiJ9.3ZFd3fbmDSo6SFyXiU4RdwsrIAndmemBXZBHeoya654";
@@ -67,7 +74,7 @@ public class ActivityDias extends AppCompatActivity {
 
 
             } catch (JSONException e) {
-                Toast.makeText(ActivityDias.this, "Se ha produciodo un error ", Toast.LENGTH_LONG).show();
+                Toast.makeText(ActivityDias.this, "Se ha produciodo un ERROR 2", Toast.LENGTH_LONG).show();
             }
         } // run
 
@@ -75,12 +82,17 @@ public class ActivityDias extends AppCompatActivity {
         public void Mostrar(String respuesta2) {
             try {
                 JSONArray array = new JSONArray(respuesta2);
-                String pueblo = array.getJSONObject(0).getString("nombre");
-                String provincia = array.getJSONObject(0).getString("provincia");
+                pueblo = array.getJSONObject(0).getString("nombre");
+                provincia = array.getJSONObject(0).getString("provincia");
+                est_cielo = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");
 
-                String est_cielo = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");
+                //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
+
+                System.out.println(est_cielo);
+                tv.setText(pueblo);
+
             } catch (JSONException e) {
-
+                Toast.makeText(ActivityDias.this, "Se ha produciodo un ERROR ", Toast.LENGTH_LONG).show();
             }
         }
 

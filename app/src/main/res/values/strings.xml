@@ -9,5 +9,5 @@
     <string name="vel_viento">Velocidad del viento:</string>
     <string name="est_cielo">Estado del cielo:</string>
     <string name="button">Obtener info</string>
-    <string name="BotonSiguiente">Next</string>
+    <string name="BotonSiguiente">Seleccionar</string>
 </resources>

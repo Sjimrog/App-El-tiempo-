@@ -70,7 +70,7 @@ public class ActivityMun extends AppCompatActivity {
 
 
             } catch (Exception e) {
-                Toast.makeText(ActivityMun.this, "Se ha produciodo un error ", Toast.LENGTH_LONG).show();
+                Toast.makeText(ActivityMun.this, "Se ha produciodo un ERROR 1 ", Toast.LENGTH_LONG).show();
             }
         } // run
 
@@ -84,12 +84,12 @@ public class ActivityMun extends AppCompatActivity {
                 JSONArray arr2 = new JSONArray(municipio);
                 do {
                     String num_mun = arr2.getJSONObject(i).getString("id");
-                    System.out.println(num_mun);
+                    //System.out.println(num_mun);
                     if (num_mun.equals(null)) {
                         i += 1;
                     } else {
-                        System.out.println(num_mun.substring(0, 2));
-                        System.out.println(id_P);
+                        //System.out.println(num_mun.substring(0, 2));
+                        //System.out.println(id_P);
                         if (id_P.equals(num_mun.substring(0, 2))) {
                             String prov = arr2.getJSONObject(i).getString("nm");
                             System.out.println(prov);

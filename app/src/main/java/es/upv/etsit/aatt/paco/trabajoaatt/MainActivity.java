@@ -72,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 // Impresión de resultados en el hilo de la UI (User Interface thread): runOnUiThread
                 runOnUiThread(() -> ListProvincias(respuesta));
 
-
-
             } catch (Exception e) {
-                Toast.makeText(MainActivity.this, "Se ha produciodo un error ", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Se ha produciodo un ERROR ", Toast.LENGTH_LONG).show();
             }
         } // run
 
