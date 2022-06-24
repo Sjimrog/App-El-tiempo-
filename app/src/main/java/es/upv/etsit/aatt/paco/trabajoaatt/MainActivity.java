@@ -127,12 +127,16 @@ public class MainActivity extends AppCompatActivity {
     }
     //Municipios
 
+
+
     //Boton Next
     public void Next (View view){
         Intent siguiente = new Intent(this, ActivityMun.class);
         siguiente.putExtra("Provincia",id_prov);
         startActivity(siguiente);
     }
+
+
 
     //Peticion
     public String API_REST(String uri){

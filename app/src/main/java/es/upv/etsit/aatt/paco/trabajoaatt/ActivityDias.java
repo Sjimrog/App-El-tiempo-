@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -51,12 +52,21 @@ public class ActivityDias extends AppCompatActivity {
             try {
                 // Primera peticion
 
-                final String respuesta2 = API_REST(url_inicial);
-                System.out.println(respuesta2);
+                final String respuesta = API_REST(url_inicial);
+
+                JSONObject objeto = new JSONObject(respuesta);
+                String segunda_url = objeto.getString("datos");
+                System.out.println(segunda_url);
+
+                //System.out.println(respuesta2);
+                //Segunda peticion
+
+                final String respuesta2 = API_REST(segunda_url);
+
                 runOnUiThread(() -> Mostrar(respuesta2));
 
 
-            } catch (Exception e) {
+            } catch (JSONException e) {
                 Toast.makeText(ActivityDias.this, "Se ha produciodo un error ", Toast.LENGTH_LONG).show();
             }
         } // run

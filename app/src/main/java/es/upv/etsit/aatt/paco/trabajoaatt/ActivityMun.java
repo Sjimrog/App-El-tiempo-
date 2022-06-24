@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,16 +33,19 @@ public class ActivityMun extends AppCompatActivity {
     Spinner spinner_mun;
 
     private String id_mun, id_P;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mun);
 
-        id_P= getIntent().getStringExtra("Provincia");
+        id_P = getIntent().getStringExtra("Provincia");
         String urlMun = "https://raw.githubusercontent.com/IagoLast/pselect/master/data/municipios.json";
         ServiciosWebEncadenados2 servicioWeb2 = new ServiciosWebEncadenados2(urlMun);
         servicioWeb2.start();
     }
+
 
     class ServiciosWebEncadenados2 extends Thread {
 
@@ -54,7 +58,8 @@ public class ActivityMun extends AppCompatActivity {
 
         // tarea a ejecutar en hilo paralelo e independiente
 
-        @Override public void run() {
+        @Override
+        public void run() {
             // Gestiónese oportunamente las excepciones
             try {
                 // Primera peticion
@@ -80,12 +85,12 @@ public class ActivityMun extends AppCompatActivity {
                 do {
                     String num_mun = arr2.getJSONObject(i).getString("id");
                     System.out.println(num_mun);
-                    if(num_mun.equals(null)){
+                    if (num_mun.equals(null)) {
                         i += 1;
-                    }else {
+                    } else {
                         System.out.println(num_mun.substring(0, 2));
                         System.out.println(id_P);
-                        if(id_P.equals(num_mun.substring(0, 2))) {
+                        if (id_P.equals(num_mun.substring(0, 2))) {
                             String prov = arr2.getJSONObject(i).getString("nm");
                             System.out.println(prov);
                             lista_mun.add(prov);
@@ -104,7 +109,7 @@ public class ActivityMun extends AppCompatActivity {
                 //Seleccionamos la id del municipio selecionado
                 spinner_mun.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void  onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         try {
                             id_mun = arr2.getJSONObject(position).getString("id");
                             System.out.println(id_mun);
@@ -113,6 +118,7 @@ public class ActivityMun extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> arg0) {
                         Toast.makeText(ActivityMun.this, "Nothing Selected", Toast.LENGTH_SHORT).show();
@@ -124,13 +130,16 @@ public class ActivityMun extends AppCompatActivity {
                 Toast.makeText(ActivityMun.this, "error", Toast.LENGTH_LONG).show();
             }
         }
-
-        //Boton Next
-    public void Next (View view){
-        Intent siguiente = new Intent(ActivityMun.this, ActivityDias.class);
-        siguiente.putExtra("Municipio", id_mun);
-        startActivity(siguiente);
     }
+
+
+    //Boton Next
+    public void Next(View view){
+        Intent dias = new Intent(ActivityMun.this, ActivityDias.class);
+        dias.putExtra("Municipio", id_mun);
+        startActivity(dias);
+    }
+
 
     public String API_REST(String uri){
 
@@ -174,5 +183,4 @@ public class ActivityMun extends AppCompatActivity {
         return new String(response); // de StringBuffer -response- pasamos a String
 
     } // API_REST
-}
 }
