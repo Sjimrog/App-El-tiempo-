@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner_prov;
 
 
-    private String id_prov;
+    private String id_prov, nm_prov;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         id_prov = arr.getJSONObject(position).getString("id");
                         System.out.println(id_prov);
-
+                        nm_prov = arr.getJSONObject(position).getString("nm");
+                        System.out.println(nm_prov);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     public void Next (View view){
         Intent siguiente = new Intent(this, ActivityMun.class);
         siguiente.putExtra("Provincia",id_prov);
+        siguiente.putExtra("Nombre",nm_prov);
         startActivity(siguiente);
     }
 

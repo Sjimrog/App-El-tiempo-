@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -22,24 +25,51 @@ public class ActivityDias extends AppCompatActivity {
 
     private static final String TAG = "API_REST";
 
-    public String id_M;
-    public String fecha;
+    public String id_M, mun, prov;
 
-    private TextView tv;
-    public String pueblo, provincia, est_cielo;
+    private TextView tv_lugar;
+
+    public int [] temp_max = new int [6];
+    public int [] temp_min = new int [6];
+    public int [] prob_precip = new int [6];
+    public String [] dir_viento = new String [6];
+    public int [] vel_viento = new int [6];
+    public String [] est_cielo = new String [6];
+    public String [] fecha = new String [6];
+
+    private ListView listview;
+    private ArrayList<String> dias;
+    //public static String [] nombreDias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dias);
 
-        tv = (TextView)findViewById(R.id.tvfecha);
+        tv_lugar = (TextView)findViewById(R.id.tvlugar);
+        listview = (ListView)findViewById(R.id.ListView);
 
-        id_M = getIntent().getStringExtra("Municipio");
+        id_M = getIntent().getStringExtra("Id_Municipio");
+        mun = getIntent().getStringExtra("Municipio");
+        System.out.println("ultima" + mun);
+        prov = getIntent().getStringExtra("Provincia");
         String key = "?api_key=" + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4YmVyY29yQHRlbGVjby51cHYuZXMiLCJqdGkiOiJmNGFkMzE4Ni1kNDE1LTQ3NTAtYmMwNS02MTAzOWIxMzU0YmEiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY1Mjk0OTUzMywidXNlcklkIjoiZjRhZDMxODYtZDQxNS00NzUwLWJjMDUtNjEwMzliMTM1NGJhIiwicm9sZSI6IiJ9.3ZFd3fbmDSo6SFyXiU4RdwsrIAndmemBXZBHeoya654";
         String url = "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/" + id_M + key;
         ServiciosWebEncadenados3 servicioWeb3 = new ServiciosWebEncadenados3(url);
         servicioWeb3.start();
+
+        /**dias = new ArrayList<String>();
+        dias.add("Lunes");
+        dias.add("Martes");
+        dias.add("Miercoles");
+        dias.add("Jueves");
+        dias.add("Viernes");
+        dias.add("Sábado");
+        dias.add("Domingo");
+
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, R.layout., dias);
+        listview.setAdapter(myAdapter);*/
+
     }
 
     class ServiciosWebEncadenados3 extends Thread {
@@ -81,15 +111,26 @@ public class ActivityDias extends AppCompatActivity {
 
         public void Mostrar(String respuesta2) {
             try {
+                tv_lugar.setText(mun + ", " + prov);
+
                 JSONArray array = new JSONArray(respuesta2);
-                pueblo = array.getJSONObject(0).getString("nombre");
-                provincia = array.getJSONObject(0).getString("provincia");
-                est_cielo = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");
 
-                //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
+                for(int i = 0; i <= 6; i++) {
+                    temp_max[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONObject("temperatura").getInt("maxima");
+                    temp_min[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONObject("temperatura").getInt("minima");
 
-                System.out.println(est_cielo);
-                tv.setText(pueblo);
+                    prob_precip[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("probPrecipitacion").getJSONObject(5).getInt("value");
+
+                    dir_viento[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("viento").getJSONObject(5).getString("direccion");
+                    vel_viento[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("viento").getJSONObject(5).getInt("velocidad");
+
+                    est_cielo[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");           //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
+                    fecha[i] = array.getJSONObject(i).getString("fecha");
+                }
+
+                for(int i = 0; i <= 6; i++){
+
+                }
 
             } catch (JSONException e) {
                 Toast.makeText(ActivityDias.this, "Se ha produciodo un ERROR ", Toast.LENGTH_LONG).show();

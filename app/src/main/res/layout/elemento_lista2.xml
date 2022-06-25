@@ -26,30 +26,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvLunMun"
+                    android:id="@+id/tvLun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvLunProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvLunMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvLunMun" />
 
                 <TextView
                     android:id="@+id/tempLun"
@@ -96,30 +84,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvMarMun"
+                    android:id="@+id/tvMar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvMarProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvMarMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMarMun" />
 
                 <TextView
                     android:id="@+id/tempMar"
@@ -166,30 +142,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvMieMun"
+                    android:id="@+id/tvMie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvMieProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvMieMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMieMun" />
 
                 <TextView
                     android:id="@+id/tempMie"
@@ -236,30 +200,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvJueMun"
+                    android:id="@+id/tvJue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvJueProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="4dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvJueMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvJueMun" />
 
                 <TextView
                     android:id="@+id/tempJue"
@@ -305,30 +257,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvVieMun"
+                    android:id="@+id/tvVie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvVieProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvVieMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvVieMun" />
 
                 <TextView
                     android:id="@+id/tempVie"
@@ -374,30 +314,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvSabMun"
+                    android:id="@+id/tvSab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvSabProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvSabMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvSabMun" />
 
                 <TextView
                     android:id="@+id/tempSab"
@@ -444,30 +372,18 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tvDomMun"
+                    android:id="@+id/tvDom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="28dp"
                     android:text="TextView"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvDomProv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toStartOf="@+id/tvDomMun"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDomMun" />
 
                 <TextView
                     android:id="@+id/tempDom"

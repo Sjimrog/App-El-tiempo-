@@ -10,4 +10,5 @@
     <string name="est_cielo">Estado del cielo:</string>
     <string name="button">Obtener info</string>
     <string name="BotonSiguiente">Seleccionar</string>
+    <string name="tv_nm">Nombre de provincia:</string>
 </resources>
