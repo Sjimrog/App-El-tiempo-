@@ -50,11 +50,14 @@ public class ActivityDias extends AppCompatActivity {
         listview = (ListView)findViewById(R.id.ListView);
 
         id_M = getIntent().getStringExtra("Id_Municipio");
+
         mun = getIntent().getStringExtra("Municipio");
         System.out.println("ultima" + mun);
         prov = getIntent().getStringExtra("Provincia");
         String key = "?api_key=" + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4YmVyY29yQHRlbGVjby51cHYuZXMiLCJqdGkiOiJmNGFkMzE4Ni1kNDE1LTQ3NTAtYmMwNS02MTAzOWIxMzU0YmEiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY1Mjk0OTUzMywidXNlcklkIjoiZjRhZDMxODYtZDQxNS00NzUwLWJjMDUtNjEwMzliMTM1NGJhIiwicm9sZSI6IiJ9.3ZFd3fbmDSo6SFyXiU4RdwsrIAndmemBXZBHeoya654";
         String url = "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/" + id_M + key;
+        System.out.println("la clave que llega " + url);
+
         ServiciosWebEncadenados3 servicioWeb3 = new ServiciosWebEncadenados3(url);
         servicioWeb3.start();
 
@@ -89,17 +92,18 @@ public class ActivityDias extends AppCompatActivity {
             try {
                 // Primera peticion
 
-                final String respuesta = API_REST(url_inicial);
+                String respuesta = API_REST(url_inicial);
 
                 JSONObject objeto = new JSONObject(respuesta);
                 String segunda_url = objeto.getString("datos");
-                System.out.println(segunda_url);
+                System.out.println("segunda url" + segunda_url);
 
                 //System.out.println(respuesta2);
                 //Segunda peticion
 
                 final String respuesta2 = API_REST(segunda_url);
-
+                System.out.println("respuesta" + respuesta);
+                System.out.println("respuesta2" + respuesta2);
                 runOnUiThread(() -> Mostrar(respuesta2));
 
 
@@ -115,22 +119,34 @@ public class ActivityDias extends AppCompatActivity {
 
                 JSONArray array = new JSONArray(respuesta2);
 
-                for(int i = 0; i <= 6; i++) {
-                    temp_max[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONObject("temperatura").getInt("maxima");
-                    temp_min[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONObject("temperatura").getInt("minima");
+                for(int i =0;i<50;i++){
 
-                    prob_precip[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("probPrecipitacion").getJSONObject(5).getInt("value");
+                    temp_max[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONObject("temperatura").getInt("maxima");
+                    System.out.println("TMax"+ i+" "+temp_max[i]);
 
-                    dir_viento[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("viento").getJSONObject(5).getString("direccion");
-                    vel_viento[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("viento").getJSONObject(5).getInt("velocidad");
+                    temp_min[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONObject("temperatura").getInt("minima");
+                    System.out.println("TMin"+ i+" "+temp_min[i]);
 
-                    est_cielo[i] = array.getJSONObject(i).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(1).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");           //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
-                    fecha[i] = array.getJSONObject(i).getString("fecha");
+                   prob_precip[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("probPrecipitacion").getJSONObject(5).getInt("value");
+                    System.out.println("TMprob"+ i+" "+prob_precip[i]);
+
+                    dir_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(5).getString("direccion");
+                    System.out.println("dir"+ i+" "+dir_viento[i]);
+
+                    vel_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(5).getInt("velocidad");
+                    System.out.println("velo"+ i+" "+vel_viento[i]);
+
+                    est_cielo[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");           //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
+                    System.out.println("Estado"+ i+" "+est_cielo[i]);
+
+                    fecha[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getString("fecha");
+                    System.out.println("fecha" + i +" "+fecha[i]);
+                    //i += 1;
                 }
 
-                for(int i = 0; i <= 6; i++){
+                //for(int i = 0; i <= 6; i++){
 
-                }
+
 
             } catch (JSONException e) {
                 Toast.makeText(ActivityDias.this, "Se ha produciodo un ERROR ", Toast.LENGTH_LONG).show();
@@ -173,7 +189,7 @@ public class ActivityDias extends AppCompatActivity {
 
             } catch (Exception e) { // Posibles excepciones: MalformedURLException, IOException y ProtocolException
                 e.printStackTrace();
-                Log.d(TAG, "Error conexión HTTP:" + e.toString());
+                Log.d(TAG, "Error conexión HTTP2:" + e.toString());
                 return null;
             }
 
