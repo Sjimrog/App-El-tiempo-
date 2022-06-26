@@ -19,8 +19,8 @@ public class ActivityFin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         tv1 = (TextView) findViewById(R.id.datoProvincia);
         tv2 = (TextView) findViewById(R.id.datoPueblo);
@@ -51,7 +51,12 @@ public class ActivityFin extends AppCompatActivity {
         tv8.setText(est_cielo);
     }
     //Boton Inicio
-    public void start (View view){
+    public void Municipios(View view){
+        Intent municipios = new Intent(this, ActivityMun.class);
+        startActivity(municipios);
+    }
+
+    public void Provincias(View view){
         Intent inicio = new Intent(this, MainActivity.class);
         startActivity(inicio);
     }

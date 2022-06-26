@@ -253,15 +253,31 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="145dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="64dp"
-
-        android:onClick="start"
-        android:text="Inicio"
-        android:textSize="18sp"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="68dp"
+        android:backgroundTint="#2C59CA"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:onClick="Provincias"
+        android:text="Provincias"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.778"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="68dp"
+        android:backgroundTint="#2C59CA"
+        android:text="Municipios"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:onClick="Municipios"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 

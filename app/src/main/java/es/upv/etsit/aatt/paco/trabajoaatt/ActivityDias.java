@@ -20,6 +20,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -48,8 +53,8 @@ public class ActivityDias extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dias);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         tv_lugar = (TextView)findViewById(R.id.tvlugar);
 
@@ -156,32 +161,22 @@ public class ActivityDias extends AppCompatActivity {
             JSONArray array = new JSONArray(respuesta2);
 
             for(int i =0;i<7;i++){
-
                 temp_max[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONObject("temperatura").getInt("maxima");
-                System.out.println("TMax"+ i+" "+temp_max[i]);
 
                 temp_min[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONObject("temperatura").getInt("minima");
-                System.out.println("TMin"+ i+" "+temp_min[i]);
 
                 prob_precip[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("probPrecipitacion").getJSONObject(0).getInt("value");
-                System.out.println("TMprob"+ i+" "+prob_precip[i]);
 
                 dir_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(0).getString("direccion");
-                System.out.println("dir"+ i+" "+dir_viento[i]);
 
                 vel_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(0).getInt("velocidad");
-                System.out.println("velo"+ i+" "+vel_viento[i]);
 
                 est_cielo[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("estadoCielo").getJSONObject(0).getString("descripcion");           //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
-                System.out.println("Estado"+ i+" "+est_cielo[i]);
 
                 fecha[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getString("fecha");
-                System.out.println("fecha" + i +" "+fecha[i]);
-                //i += 1;
             }
 
             est_cielo[0] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");
-
 
             Imagenes(est_cielo[0], "LunEstado");
             Imagenes(est_cielo[1], "MarEstado");
@@ -200,7 +195,7 @@ public class ActivityDias extends AppCompatActivity {
             Temperaturas(temp_max[5], temp_min[5], fecha[5], "SabEstado");
             Temperaturas(temp_max[6], temp_min[6], fecha[6], "DomEstado");
 
-            tv_lugar.setText("En " + mun + ", " + prov + " a fecha " + fecha[0].substring(0, 10));
+            tv_lugar.setText("En " + mun + ", " + prov + " a " + DiaSemana(fecha[0].substring(0, 10)) + " " + fecha[0].substring(8, 10)  + " de " + MesAño(fecha[0].substring(0,10)));
 
 
         } catch (JSONException e) {
@@ -334,6 +329,7 @@ public class ActivityDias extends AppCompatActivity {
         }
     }
 
+
     public void Temperaturas(int tempmax, int tempmin, String fecha, String dias){
 
         if(dias.equals("LunEstado")){
@@ -344,35 +340,121 @@ public class ActivityDias extends AppCompatActivity {
         else if(dias.equals("MarEstado")) {
             tempmaxMar.setText(tempmax + "ºC");
             tempminMar.setText(tempmin + "ºC");
-            tvMar.setText(fecha.substring(0, 10));
+            String dia = DiaSemana(fecha.substring(0, 10));
+            tvMar.setText(dia + " " + fecha.substring(8, 10));
         }
         else if(dias.equals("MieEstado")) {
             tempmaxMie.setText(tempmax + "ºC");
             tempminMie.setText(tempmin + "ºC");
-            tvMie.setText(fecha.substring(0, 10));
+            String dia = DiaSemana(fecha.substring(0, 10));
+            tvMie.setText(dia + " " + fecha.substring(8, 10));
         }
         else if(dias.equals("JueEstado")) {
             tempmaxJue.setText(tempmax + "ºC");
             tempminJue.setText(tempmin + "ºC");
-            tvJue.setText(fecha.substring(0, 10));
+            String dia = DiaSemana(fecha.substring(0, 10));
+            tvJue.setText(dia + " " + fecha.substring(8, 10));
         }
         else if(dias.equals("VieEstado")) {
             tempmaxVie.setText(tempmax + "ºC");
             tempminVie.setText(tempmin + "ºC");
-            tvVie.setText(fecha.substring(0, 10));
+            String dia = DiaSemana(fecha.substring(0, 10));
+            tvVie.setText(dia + " " + fecha.substring(8, 10));
         }
         else if(dias.equals("SabEstado")) {
             tempmaxSab.setText(tempmax + "ºC");
             tempminSab.setText(tempmin + "ºC");
-            tvSab.setText(fecha.substring(0, 10));
+            String dia = DiaSemana(fecha.substring(0, 10));
+            tvSab.setText(dia + " " + fecha.substring(8, 10));
         }
         else if(dias.equals("DomEstado")) {
             tempmaxDom.setText(tempmax + "ºC");
             tempminDom.setText(tempmin + "ºC");
-            tvDom.setText(fecha.substring(8, 10));
+            String dia = DiaSemana(fecha.substring(0, 10));
+            tvDom.setText(dia + " " + fecha.substring(8, 10));
         }
     }
 
+
+    //Obtenemos a partir de la fecha que dia de la semana es
+    public String DiaSemana(String fecha){
+        String Valor_dia = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaActual = null;
+
+        try{
+            fechaActual = df.parse(fecha);
+        }catch(ParseException e){
+            Toast.makeText(this, "NO se ha podido sacar la fecha", Toast.LENGTH_SHORT).show();
+        }
+        GregorianCalendar fechaCalendaio = new GregorianCalendar();
+        fechaCalendaio.setTime(fechaActual);
+        int diaSemana = fechaCalendaio.get(Calendar.DAY_OF_WEEK);
+        //int mesAño = fechaCalendaio.get(Calendar.MONTH);
+       // System.out.println(mesAño);
+
+        if(diaSemana == 1){
+            Valor_dia = "Domingo";
+        } else if(diaSemana == 2){
+            Valor_dia = "Lunes";
+        } else if(diaSemana == 3){
+            Valor_dia = "Martes";
+        } else if(diaSemana == 4){
+            Valor_dia = "Miercoles";
+        } else if(diaSemana == 5) {
+            Valor_dia = "Jueves";
+        } else if(diaSemana == 6) {
+            Valor_dia = "Viernes";
+        } else if(diaSemana == 7) {
+            Valor_dia = "Sábado";
+        }
+
+        return Valor_dia;
+    }
+
+    public String MesAño(String fecha){
+        String Valor_mes = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaActual = null;
+
+        try{
+            fechaActual = df.parse(fecha);
+        }catch(ParseException e){
+            Toast.makeText(this, "NO se ha podido sacar la fecha", Toast.LENGTH_SHORT).show();
+        }
+        GregorianCalendar fechaCalendaio = new GregorianCalendar();
+        fechaCalendaio.setTime(fechaActual);
+        int mesAño = fechaCalendaio.get(Calendar.MONTH);
+        System.out.println(mesAño);
+
+        if(mesAño == 0){
+            Valor_mes = "Enero";
+        } else if(mesAño == 1){
+            Valor_mes = "Febrero";
+        } else if(mesAño == 2){
+            Valor_mes = "Marzo";
+        } else if(mesAño == 3){
+            Valor_mes = "Abril";
+        } else if(mesAño == 4) {
+            Valor_mes = "Mayo";
+        } else if(mesAño == 5) {
+            Valor_mes = "Junio";
+        } else if(mesAño == 6) {
+            Valor_mes = "Julio";
+        } else if(mesAño == 7){
+            Valor_mes = "Agosto";
+        } else if(mesAño == 8){
+            Valor_mes = "Septiembre";
+        } else if(mesAño == 9) {
+            Valor_mes = "Octubre";
+        } else if(mesAño == 10) {
+            Valor_mes = "Noviembre";
+        } else if(mesAño == 11) {
+            Valor_mes = "Diciembre";
+        }
+
+        return Valor_mes;
+    }
     //Boton 0
     public void Mostrar0(View view) {
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
