@@ -2,8 +2,10 @@ package es.upv.etsit.aatt.paco.trabajoaatt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,13 +31,13 @@ public class ActivityDias extends AppCompatActivity {
 
     private TextView tv_lugar;
 
-    public int [] temp_max = new int [6];
-    public int [] temp_min = new int [6];
-    public int [] prob_precip = new int [6];
-    public String [] dir_viento = new String [6];
-    public int [] vel_viento = new int [6];
-    public String [] est_cielo = new String [6];
-    public String [] fecha = new String [6];
+    public int [] temp_max = new int [7];
+    public int [] temp_min = new int [7];
+    public int [] prob_precip = new int [7];
+    public String [] dir_viento = new String [7];
+    public int [] vel_viento = new int [7];
+    public String [] est_cielo = new String [7];
+    public String [] fecha = new String [7];
 
     private ListView listview;
     private ArrayList<String> dias;
@@ -54,6 +56,7 @@ public class ActivityDias extends AppCompatActivity {
         mun = getIntent().getStringExtra("Municipio");
         System.out.println("ultima" + mun);
         prov = getIntent().getStringExtra("Provincia");
+        tv_lugar.setText("Pueblo: " + mun+ " de la provincia: " + prov);
         String key = "?api_key=" + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4YmVyY29yQHRlbGVjby51cHYuZXMiLCJqdGkiOiJmNGFkMzE4Ni1kNDE1LTQ3NTAtYmMwNS02MTAzOWIxMzU0YmEiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY1Mjk0OTUzMywidXNlcklkIjoiZjRhZDMxODYtZDQxNS00NzUwLWJjMDUtNjEwMzliMTM1NGJhIiwicm9sZSI6IiJ9.3ZFd3fbmDSo6SFyXiU4RdwsrIAndmemBXZBHeoya654";
         String url = "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/diaria/" + id_M + key;
         System.out.println("la clave que llega " + url);
@@ -127,16 +130,16 @@ public class ActivityDias extends AppCompatActivity {
                     temp_min[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONObject("temperatura").getInt("minima");
                     System.out.println("TMin"+ i+" "+temp_min[i]);
 
-                   prob_precip[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("probPrecipitacion").getJSONObject(5).getInt("value");
+                   prob_precip[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("probPrecipitacion").getJSONObject(0).getInt("value");
                     System.out.println("TMprob"+ i+" "+prob_precip[i]);
 
-                    dir_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(5).getString("direccion");
+                    dir_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(0).getString("direccion");
                     System.out.println("dir"+ i+" "+dir_viento[i]);
 
-                    vel_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(5).getInt("velocidad");
+                    vel_viento[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("viento").getJSONObject(0).getInt("velocidad");
                     System.out.println("velo"+ i+" "+vel_viento[i]);
 
-                    est_cielo[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");           //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
+                    est_cielo[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getJSONArray("estadoCielo").getJSONObject(0).getString("descripcion");           //fecha = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getString(fecha);
                     System.out.println("Estado"+ i+" "+est_cielo[i]);
 
                     fecha[i] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(i).getString("fecha");
@@ -151,6 +154,98 @@ public class ActivityDias extends AppCompatActivity {
             } catch (JSONException e) {
                 Toast.makeText(ActivityDias.this, "Se ha produciodo un ERROR ", Toast.LENGTH_LONG).show();
             }
+        }
+
+        //Boton 0
+        public void Mostrar0 (View view0) {
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia", prov);
+            siguiente.putExtra("Nombre", mun);
+            siguiente.putExtra("tempMax", toString().valueOf(temp_max[0]));
+            siguiente.putExtra("tempMin", toString().valueOf(temp_min[0]));
+            siguiente.putExtra("probPre", toString().valueOf(prob_precip[0]));
+            siguiente.putExtra("dirViento", dir_viento[0]);
+            siguiente.putExtra("velViento", toString().valueOf(vel_viento[0]));
+            siguiente.putExtra("estCielo", est_cielo[0]);
+            startActivity(siguiente);
+        }
+        //Boton 1
+        public void Mostrar1 (View view1){
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia",prov);
+            siguiente.putExtra("Nombre",mun);
+            siguiente.putExtra("tempMax",toString().valueOf(temp_max[1]));
+            siguiente.putExtra("tempMin",toString().valueOf(temp_min[1]));
+            siguiente.putExtra("probPre",toString().valueOf(prob_precip[1]));
+            siguiente.putExtra("dirViento",dir_viento[1]);
+            siguiente.putExtra("velViento",toString().valueOf(vel_viento[1]));
+            siguiente.putExtra("estCielo",est_cielo[1]);
+            startActivity(siguiente);
+        }
+        //Boton 2
+        public void Mostrar2 (View view2){
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia",prov);
+            siguiente.putExtra("Nombre",mun);
+            siguiente.putExtra("tempMax",toString().valueOf(temp_max[2]));
+            siguiente.putExtra("tempMin",toString().valueOf(temp_min[2]));
+            siguiente.putExtra("probPre",toString().valueOf(prob_precip[2]));
+            siguiente.putExtra("dirViento",dir_viento[2]);
+            siguiente.putExtra("velViento",toString().valueOf(vel_viento[2]));
+            siguiente.putExtra("estCielo",est_cielo[2]);
+            startActivity(siguiente);
+        }
+        //Boton 3
+        public void Mostrar3 (View view3){
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia",prov);
+            siguiente.putExtra("Nombre",mun);
+            siguiente.putExtra("tempMax",toString().valueOf(temp_max[3]));
+            siguiente.putExtra("tempMin",toString().valueOf(temp_min[3]));
+            siguiente.putExtra("probPre",toString().valueOf(prob_precip[3]));
+            siguiente.putExtra("dirViento",dir_viento[3]);
+            siguiente.putExtra("velViento",toString().valueOf(vel_viento[3]));
+            siguiente.putExtra("estCielo",est_cielo[3]);
+            startActivity(siguiente);
+        }
+        //Boton 4
+        public void Mostrar4 (View view4){
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia",prov);
+            siguiente.putExtra("Nombre",mun);
+            siguiente.putExtra("tempMax",toString().valueOf(temp_max[4]));
+            siguiente.putExtra("tempMin",toString().valueOf(temp_min[4]));
+            siguiente.putExtra("probPre",toString().valueOf(prob_precip[4]));
+            siguiente.putExtra("dirViento",dir_viento[4]);
+            siguiente.putExtra("velViento",toString().valueOf(vel_viento[4]));
+            siguiente.putExtra("estCielo",est_cielo[4]);
+            startActivity(siguiente);
+        }
+        //Boton 5
+        public void Mostrar5 (View view5){
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia",prov);
+            siguiente.putExtra("Nombre",mun);
+            siguiente.putExtra("tempMax",toString().valueOf(temp_max[5]));
+            siguiente.putExtra("tempMin",toString().valueOf(temp_min[5]));
+            siguiente.putExtra("probPre",toString().valueOf(prob_precip[5]));
+            siguiente.putExtra("dirViento",dir_viento[5]);
+            siguiente.putExtra("velViento",toString().valueOf(vel_viento[5]));
+            siguiente.putExtra("estCielo",est_cielo[5]);
+            startActivity(siguiente);
+        }
+        //Boton 6
+        public void Mostrar6 (View view6){
+            Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
+            siguiente.putExtra("Provincia",prov);
+            siguiente.putExtra("Nombre",mun);
+            siguiente.putExtra("tempMax",toString().valueOf(temp_max[6]));
+            siguiente.putExtra("tempMin",toString().valueOf(temp_min[6]));
+            siguiente.putExtra("probPre",toString().valueOf(prob_precip[6]));
+            siguiente.putExtra("dirViento",dir_viento[6]);
+            siguiente.putExtra("velViento",toString().valueOf(vel_viento[6]));
+            siguiente.putExtra("estCielo",est_cielo[6]);
+            startActivity(siguiente);
         }
 
 
