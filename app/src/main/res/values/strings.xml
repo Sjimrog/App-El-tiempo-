@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Trabajo AA.TT.</string>
-    <string name="provincia">Provincia:</string>
+    <string name="app_name">El Tiempo</string>
+    <!--<string name="provincia">Provincia:</string>
     <string name="pueblo">Pueblo:</string>
     <string name="temp_max">Temperatura máxima:</string>
     <string name="temp_min">Temperatura mínima:</string>
     <string name="prob_precip">Probabilidad de precipitación:</string>
     <string name="dir_viento">Dirección del viento:</string>
     <string name="vel_viento">Velocidad del viento:</string>
-    <string name="est_cielo">Estado del cielo:</string>
+    <string name="est_cielo">Estado del cielo:</string>-->
     <string name="button">Obtener info</string>
     <string name="BotonSiguiente">Seleccionar</string>
     <string name="tv_nm">Nombre de provincia:</string>

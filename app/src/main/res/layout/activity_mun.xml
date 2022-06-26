@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#83D0E3"
+    android:background="#95b6e9"
     tools:context=".ActivityMun">
 
     <Spinner

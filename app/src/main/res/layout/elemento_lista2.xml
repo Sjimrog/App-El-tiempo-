@@ -179,7 +179,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageButton
-                android:id="@+id/MierMas"
+                android:id="@+id/MieMas"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"

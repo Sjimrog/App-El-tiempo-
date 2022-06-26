@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#95b6e9"
     tools:context=".ActivityFin">
 
     <LinearLayout
@@ -29,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/provincia"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/pueblo"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -84,7 +83,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/temp_max"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -116,7 +114,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/temp_min"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -139,7 +136,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="25sp"
                 android:layout_height="25sp"
-                android:layout_weight="0.5"
+                android:layout_weight="0.25"
                 app:srcCompat="@drawable/probpre" />
 
             <TextView
@@ -148,7 +145,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/prob_precip"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -180,7 +176,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/dir_viento"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -213,7 +208,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/vel_viento"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -245,7 +239,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="@string/est_cielo"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

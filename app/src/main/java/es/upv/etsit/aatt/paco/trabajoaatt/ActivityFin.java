@@ -30,14 +30,14 @@ public class ActivityFin extends AppCompatActivity {
         tv8 = (TextView) findViewById(R.id.datoEstCielo);
 
 
-        String provincia    = getIntent().getStringExtra("Provincia");
-        String pueblo = getIntent().getStringExtra("pueblo");
-        String temp_max = getIntent().getStringExtra("TempMin");
-        String temp_min = getIntent().getStringExtra("TempMin");
-        String prob_precip = getIntent().getStringExtra("Probabilidad");
-        String dir_viento = getIntent().getStringExtra("Direccion");
-        String vel_viento = getIntent().getStringExtra("Velocidad");
-        String est_cielo = getIntent().getStringExtra("Estado");
+        String provincia = getIntent().getStringExtra("Provincia");
+        String pueblo = getIntent().getStringExtra("Nombre");
+        String temp_max = getIntent().getStringExtra("tempMax");
+        String temp_min = getIntent().getStringExtra("tempMin");
+        String prob_precip = getIntent().getStringExtra("probPre");
+        String dir_viento = getIntent().getStringExtra("dirViento");
+        String vel_viento = getIntent().getStringExtra("velViento");
+        String est_cielo = getIntent().getStringExtra("estCielo");
 
         tv1.setText(provincia);
         tv2.setText(pueblo);
