@@ -19,6 +19,8 @@ public class ActivityFin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         tv1 = (TextView) findViewById(R.id.datoProvincia);
         tv2 = (TextView) findViewById(R.id.datoPueblo);

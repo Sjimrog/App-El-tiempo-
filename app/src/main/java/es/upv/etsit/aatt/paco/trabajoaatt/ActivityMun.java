@@ -42,6 +42,8 @@ public class ActivityMun extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mun);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         id_P = getIntent().getStringExtra("Provincia");
         nm_P = getIntent().getStringExtra("Nombre");
@@ -71,7 +73,6 @@ public class ActivityMun extends AppCompatActivity {
                 // Primera peticion
 
                 final String respuesta2 = API_REST(url_inicial);
-                System.out.println(respuesta2);
                 runOnUiThread(() -> ListMunicipio(respuesta2));
 
 
@@ -80,25 +81,22 @@ public class ActivityMun extends AppCompatActivity {
             }
         } // run
 
+        //Obtener listado de municipios
         public void ListMunicipio(String municipio) {
             Log.i(TAG, "informacion");
 
             spinner_mun = (Spinner) findViewById(R.id.spinner_mun);
 
             int i = 0;
-            try {
+            try { //En este caso al tener la id de la provincia sabemos que la del municipio empieza por esta, por lo que comparamos los inicios y los que cuadran se añaden a la lista
                 JSONArray arr2 = new JSONArray(municipio);
                 do {
                     String num_mun = arr2.getJSONObject(i).getString("id");
-                    //System.out.println("num pueblo" + num_mun);
                     if (num_mun.equals(null)) {
                         i += 1;
                     } else {
-                        //System.out.println(num_mun.substring(0, 2));
-                        //System.out.println(id_P);
-                        if (id_P.equals(num_mun.substring(0, 2))) {
+                        if (id_P.equals(num_mun.substring(0, 2))) { //Comparación para añadir
                             String prov = arr2.getJSONObject(i).getString("nm");
-                            System.out.println("municipio" +prov);
                             lista_mun.add(prov);
                             i += 1;
                         } else {
@@ -108,7 +106,7 @@ public class ActivityMun extends AppCompatActivity {
 
                 } while (i < arr2.length());
 
-                arrayAdapter_mun = new ArrayAdapter<String>(ActivityMun.this, android.R.layout.simple_spinner_item, lista_mun);
+                arrayAdapter_mun = new ArrayAdapter<String>(ActivityMun.this, R.layout.spinner_item_info, lista_mun);
                 spinner_mun.setAdapter(arrayAdapter_mun);
 
 
@@ -118,36 +116,25 @@ public class ActivityMun extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         try {
 
-                            System.out.println("1" + id_P + "000");
-
-                             mun = lista_mun.get(position);
-
-                            System.out.println("municipio"+mun);
-                            System.out.println(position);
-
+                            mun = lista_mun.get(position); //Con esto obtenemos el nombre del municipio obtenido
                             int i = 0;
                             do {
-                                 String municipio = arr2.getJSONObject(i).getString("nm");//System.out.println("num pueblo" + num_mun);
-                                //
-                                if (municipio.equals(mun)) {
-                                    id_mun = arr2.getJSONObject(i).getString("id");
-                                    System.out.println("municipio2" + id_mun+ mun);
+                                String municipio = arr2.getJSONObject(i).getString("nm");
 
+                                if (municipio.equals(mun)) { //Vamos comparando todos los municipios con el seleccionado hasta que cuadre
+                                    id_mun = arr2.getJSONObject(i).getString("id"); //una vez cuadrado sacamos la id del municipio sabiendo su posición
                                     break;
 
                                 } else {
                                     i += 1;
+
                                 }
 
                             } while (i < arr2.length());
 
-
-                            //mun = arr2.getJSONObject(position).getString("nm");
-                            System.out.println("hola" + id_P + id_mun.substring(2,5));
-                            System.out.println(id_mun);
-
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Toast.makeText(ActivityMun.this, "Se ha producido un error", Toast.LENGTH_SHORT).show();
+
                         }
                     }
 
@@ -170,7 +157,6 @@ public class ActivityMun extends AppCompatActivity {
         Intent dias = new Intent(ActivityMun.this, ActivityDias.class);
         dias.putExtra("Id_Municipio", id_mun);
         dias.putExtra("Provincia", nm_P);
-        System.out.println("ultima1111" + mun +id_mun + nm_P);
         dias.putExtra("Municipio", mun);
         startActivity(dias);
     }

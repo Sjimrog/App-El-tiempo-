@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         String urlProv = "https://raw.githubusercontent.com/IagoLast/pselect/master/data/provincias.json";
         ServiciosWebEncadenados servicioWeb = new ServiciosWebEncadenados(urlProv);
         servicioWeb.start();
-        //System.out.println(id_mun);
 
     }
     //Provincias
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // Primera peticion
                 final String respuesta = API_REST(url_inicial);
-                System.out.println(respuesta);
                 // Impresión de resultados en el hilo de la UI (User Interface thread): runOnUiThread
                 runOnUiThread(() -> ListProvincias(respuesta));
 
@@ -79,38 +79,36 @@ public class MainActivity extends AppCompatActivity {
 
     } // ServiciosWebEncadenados
 
+    //Esta parte del codigo sirve para obtener la lista con la que haremos el spinner
     public void ListProvincias(String provincias) {
         Log.i(TAG, "informacion");
 
         spinner_prov = (Spinner) findViewById(R.id.spiner_prov);
 
         int i = 0;
-        try {
+        try {    /**Con el do while nos recorremos todo el Json para sacar los nombres de las provincias y añadirlas a la lista la cual meteremos en el spinner*/
             JSONArray arr = new JSONArray(provincias);
             do {
                 String prov = arr.getJSONObject(i).getString("nm");
-                //System.out.println(prov);
                 lista_Prov.add(prov);
                 i += 1;
             } while (i < arr.length());
 
-            arrayAdapter_Prov = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista_Prov);
+            arrayAdapter_Prov = new ArrayAdapter<String>(this, R.layout.spinner_item_info, lista_Prov);
             spinner_prov.setAdapter(arrayAdapter_Prov);
 
 
 
             //Seleccionamos la id de la provincia selecionada
             spinner_prov.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-                @Override
+                @Override       //Una vez selecionado un elemento del spinner obtenemos su nombre y la id
                 public void  onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     try {
                         id_prov = arr.getJSONObject(position).getString("id");
-                        System.out.println(id_prov);
                         nm_prov = arr.getJSONObject(position).getString("nm");
-                        System.out.println(nm_prov);
 
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this, "Se ha producido un error", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
@@ -124,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
         }
     }
-    //Municipios
 
 
 
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(
                         // Presumiblemente, la codificación de la respuesta es utf-8
-                        new InputStreamReader(conn.getInputStream() , "utf-8" ));
+                        new InputStreamReader(conn.getInputStream() , "utf-8" ));//Hemos puesto el utf-8 para poder leer las tildes y las letras típicas de idiomas
                 String output;
                 response = new StringBuffer();
 

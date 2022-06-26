@@ -48,6 +48,8 @@ public class ActivityDias extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dias);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         tv_lugar = (TextView)findViewById(R.id.tvlugar);
 
