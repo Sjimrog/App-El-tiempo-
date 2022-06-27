@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_index_round);
 
         String urlProv = "https://raw.githubusercontent.com/IagoLast/pselect/master/data/provincias.json";
         ServiciosWebEncadenados servicioWeb = new ServiciosWebEncadenados(urlProv);
