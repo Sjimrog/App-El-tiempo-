@@ -32,12 +32,11 @@ public class ActivityDias extends AppCompatActivity {
 
     private static final String TAG = "API_REST";
 
-    public String id_M, mun, prov;
+    private String id_M, mun, prov, id_Pro;
 
     private TextView tv_lugar;
     private TextView tvLun, tempmaxLun, tempminLun, tvMar, tempmaxMar, tempminMar, tvMie, tempmaxMie, tempminMie, tvJue, tempmaxJue, tempminJue, tvVie, tempmaxVie, tempminVie, tvSab, tempmaxSab, tempminSab, tvDom, tempmaxDom, tempminDom;
     private ImageView LunEstado, MarEstado, MieEstado, JueEstado, VieEstado, SabEstado, DomEstado;
-    private ImageButton LunMas, MarMas, MieMas, JueMas, VieMas, SabMas, DomMas;
 
     private int [] temp_max = new int [7];
     private int [] temp_min = new int [7];
@@ -47,12 +46,12 @@ public class ActivityDias extends AppCompatActivity {
     private String [] est_cielo = new String [7];
     private String [] fecha = new String [7];
 
-    //public static String [] nombreDias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dias);
+
+        //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_index_round);
 
@@ -90,19 +89,12 @@ public class ActivityDias extends AppCompatActivity {
         SabEstado = (ImageView)findViewById(R.id.SabEstado);
         DomEstado = (ImageView)findViewById(R.id.DomEstado);
 
-        LunMas = (ImageButton)findViewById(R.id.LunMas);
-        MarMas = (ImageButton)findViewById(R.id.MarMas);
-        MieMas = (ImageButton)findViewById(R.id.MieMas);
-        JueMas = (ImageButton)findViewById(R.id.JueMas);
-        VieMas = (ImageButton)findViewById(R.id.VieMas);
-        SabMas = (ImageButton)findViewById(R.id.SabMas);
-        DomMas = (ImageButton)findViewById(R.id.DomMas);
-
-
         id_M = getIntent().getStringExtra("Id_Municipio");
 
+        id_Pro = getIntent().getStringExtra("Id_provincia");
+
         mun = getIntent().getStringExtra("Municipio");
-        System.out.println("ultima" + mun);
+
         prov = getIntent().getStringExtra("Provincia");
 
         String key = "?api_key=" + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4YmVyY29yQHRlbGVjby51cHYuZXMiLCJqdGkiOiJmNGFkMzE4Ni1kNDE1LTQ3NTAtYmMwNS02MTAzOWIxMzU0YmEiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY1Mjk0OTUzMywidXNlcklkIjoiZjRhZDMxODYtZDQxNS00NzUwLWJjMDUtNjEwMzliMTM1NGJhIiwicm9sZSI6IiJ9.3ZFd3fbmDSo6SFyXiU4RdwsrIAndmemBXZBHeoya654";
@@ -111,9 +103,6 @@ public class ActivityDias extends AppCompatActivity {
 
         ServiciosWebEncadenados3 servicioWeb3 = new ServiciosWebEncadenados3(url);
         servicioWeb3.start();
-
-
-
     }
 
     class ServiciosWebEncadenados3 extends Thread {
@@ -137,14 +126,14 @@ public class ActivityDias extends AppCompatActivity {
 
                 JSONObject objeto = new JSONObject(respuesta);
                 String segunda_url = objeto.getString("datos");
-                System.out.println("segunda url" + segunda_url);
 
-                //System.out.println(respuesta2);
+
                 //Segunda peticion
-
                 final String respuesta2 = API_REST(segunda_url);
                 System.out.println("respuesta" + respuesta);
                 System.out.println("respuesta2" + respuesta2);
+
+                // Impresión de resultados en el hilo de la UI (User Interface thread): runOnUiThread
                 runOnUiThread(() -> Mostrar(respuesta2));
 
 
@@ -154,10 +143,9 @@ public class ActivityDias extends AppCompatActivity {
         } // run
     }
 
+    //Mostramos por pantalla toda la info a partir del JSON
     public void Mostrar(String respuesta2) {
         try {
-
-
             JSONArray array = new JSONArray(respuesta2);
 
             for(int i =0;i<7;i++){
@@ -203,6 +191,7 @@ public class ActivityDias extends AppCompatActivity {
         }
     }
 
+    //Establecemos las imagenes segun el estado del cielo
     public void Imagenes(String estado_cielo, String dias){
         Drawable x = null;
         switch (estado_cielo) {
@@ -306,30 +295,31 @@ public class ActivityDias extends AppCompatActivity {
                 x = getResources().getDrawable(R.drawable.poconuboso);
                 break;
         }
+
         if(dias.equals("LunEstado")){
             LunEstado.setImageDrawable(x);
-        }
-        else if(dias.equals("MarEstado")) {
+
+        } else if(dias.equals("MarEstado")) {
             MarEstado.setImageDrawable(x);
-        }
-        else if(dias.equals("MieEstado")) {
+
+        } else if(dias.equals("MieEstado")) {
             MieEstado.setImageDrawable(x);
-        }
-        else if(dias.equals("JueEstado")) {
+
+        } else if(dias.equals("JueEstado")) {
             JueEstado.setImageDrawable(x);
-        }
-        else if(dias.equals("VieEstado")) {
+
+        } else if(dias.equals("VieEstado")) {
             VieEstado.setImageDrawable(x);
-        }
-        else if(dias.equals("SabEstado")) {
+
+        } else if(dias.equals("SabEstado")) {
             SabEstado.setImageDrawable(x);
-        }
-        else if(dias.equals("DomEstado")) {
+
+        } else if(dias.equals("DomEstado")) {
             DomEstado.setImageDrawable(x);
         }
     }
 
-
+    //Establece las temperaturas en el dia correspondiente
     public void Temperaturas(int tempmax, int tempmin, String fecha, String dias){
 
         if(dias.equals("LunEstado")){
@@ -390,8 +380,6 @@ public class ActivityDias extends AppCompatActivity {
         GregorianCalendar fechaCalendaio = new GregorianCalendar();
         fechaCalendaio.setTime(fechaActual);
         int diaSemana = fechaCalendaio.get(Calendar.DAY_OF_WEEK);
-        //int mesAño = fechaCalendaio.get(Calendar.MONTH);
-       // System.out.println(mesAño);
 
         if(diaSemana == 1){
             Valor_dia = "Domingo";
@@ -408,10 +396,10 @@ public class ActivityDias extends AppCompatActivity {
         } else if(diaSemana == 7) {
             Valor_dia = "Sábado";
         }
-
         return Valor_dia;
     }
 
+    //Obtenemos a partir de la fecha que mes del año es
     public String MesAño(String fecha){
         String Valor_mes = null;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -425,7 +413,6 @@ public class ActivityDias extends AppCompatActivity {
         GregorianCalendar fechaCalendaio = new GregorianCalendar();
         fechaCalendaio.setTime(fechaActual);
         int mesAño = fechaCalendaio.get(Calendar.MONTH);
-        System.out.println(mesAño);
 
         if(mesAño == 0){
             Valor_mes = "Enero";
@@ -452,9 +439,9 @@ public class ActivityDias extends AppCompatActivity {
         } else if(mesAño == 11) {
             Valor_mes = "Diciembre";
         }
-
         return Valor_mes;
     }
+
     //Boton 0
     public void Mostrar0(View view) {
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -466,8 +453,10 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento", dir_viento[0]);
         siguiente.putExtra("velViento", toString().valueOf(vel_viento[0]));
         siguiente.putExtra("estCielo", est_cielo[0]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
+
     //Boton 1
     public void Mostrar1 (View view1){
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -479,8 +468,10 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento",dir_viento[1]);
         siguiente.putExtra("velViento",toString().valueOf(vel_viento[1]));
         siguiente.putExtra("estCielo",est_cielo[1]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
+
     //Boton 2
     public void Mostrar2 (View view2){
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -492,8 +483,10 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento",dir_viento[2]);
         siguiente.putExtra("velViento",toString().valueOf(vel_viento[2]));
         siguiente.putExtra("estCielo",est_cielo[2]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
+
     //Boton 3
     public void Mostrar3 (View view3){
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -505,8 +498,10 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento",dir_viento[3]);
         siguiente.putExtra("velViento",toString().valueOf(vel_viento[3]));
         siguiente.putExtra("estCielo",est_cielo[3]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
+
     //Boton 4
     public void Mostrar4 (View view4){
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -518,8 +513,10 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento",dir_viento[4]);
         siguiente.putExtra("velViento",toString().valueOf(vel_viento[4]));
         siguiente.putExtra("estCielo",est_cielo[4]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
+
     //Boton 5
     public void Mostrar5 (View view5){
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -531,8 +528,10 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento",dir_viento[5]);
         siguiente.putExtra("velViento",toString().valueOf(vel_viento[5]));
         siguiente.putExtra("estCielo",est_cielo[5]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
+
     //Boton 6
     public void Mostrar6 (View view6){
         Intent siguiente = new Intent(ActivityDias.this, ActivityFin.class);
@@ -544,9 +543,9 @@ public class ActivityDias extends AppCompatActivity {
         siguiente.putExtra("dirViento",dir_viento[6]);
         siguiente.putExtra("velViento",toString().valueOf(vel_viento[6]));
         siguiente.putExtra("estCielo",est_cielo[6]);
+        siguiente.putExtra("Id_provincia", id_Pro);
         startActivity(siguiente);
     }
-
 
 
     public String API_REST(String uri) {
@@ -578,9 +577,7 @@ public class ActivityDias extends AppCompatActivity {
             } else {
                 Log.d(TAG, "responseCode: " + responseCode);
                 return null; // retorna null anticipadamente si hay algun problema
-
             }
-
 
         } catch (Exception e) { // Posibles excepciones: MalformedURLException, IOException y ProtocolException
             e.printStackTrace();
@@ -589,7 +586,6 @@ public class ActivityDias extends AppCompatActivity {
         }
 
         return new String(response); // de StringBuffer -response- pasamos a String
-
     } // API_REST
 }
 

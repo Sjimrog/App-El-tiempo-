@@ -15,13 +15,15 @@ public class ActivityFin extends AppCompatActivity {
     private TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8;
     private ImageView est;
 
-    public String pueblo, provincia, dir_viento, est_cielo,temp_max, temp_min, prob_precip, vel_viento;
+    private String pueblo, provincia, dir_viento, est_cielo,temp_max, temp_min, prob_precip, vel_viento, id_pro;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin);
+
+        //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_index_round);
 
@@ -35,15 +37,15 @@ public class ActivityFin extends AppCompatActivity {
         tv8 = (TextView) findViewById(R.id.datoEstCielo);
         est = (ImageView)findViewById(R.id.img_estCielo);
 
-
-        String provincia = getIntent().getStringExtra("Provincia");
-        String pueblo = getIntent().getStringExtra("Nombre");
-        String temp_max = getIntent().getStringExtra("tempMax");
-        String temp_min = getIntent().getStringExtra("tempMin");
-        String prob_precip = getIntent().getStringExtra("probPre");
-        String dir_viento = getIntent().getStringExtra("dirViento");
-        String vel_viento = getIntent().getStringExtra("velViento");
-        String est_cielo = getIntent().getStringExtra("estCielo");
+        id_pro = getIntent().getStringExtra("Id_provincia");
+        provincia = getIntent().getStringExtra("Provincia");
+        pueblo = getIntent().getStringExtra("Nombre");
+        temp_max = getIntent().getStringExtra("tempMax");
+        temp_min = getIntent().getStringExtra("tempMin");
+        prob_precip = getIntent().getStringExtra("probPre");
+        dir_viento = getIntent().getStringExtra("dirViento");
+        vel_viento = getIntent().getStringExtra("velViento");
+        est_cielo = getIntent().getStringExtra("estCielo");
 
         tv1.setText(provincia);
         tv2.setText(pueblo);
@@ -55,16 +57,22 @@ public class ActivityFin extends AppCompatActivity {
         tv8.setText(est_cielo);
         Imagenes(est_cielo);
     }
-    //Boton Inicio
+
+    //Boton para pasar a la activity de los municipios
     public void Municipios(View view){
         Intent municipios = new Intent(this, ActivityMun.class);
+        municipios.putExtra("ProvinciaElegida", provincia);
+        municipios.putExtra("IdProvinciaElegida", id_pro);
         startActivity(municipios);
     }
 
+    //Boton para pasar a la actvity de las provincias
     public void Provincias(View view){
         Intent inicio = new Intent(this, MainActivity.class);
         startActivity(inicio);
     }
+
+    //establece la imagen segun el estado del cielo
     public void Imagenes(String estado_cielo){
         Drawable x = null;
         switch (estado_cielo) {
@@ -169,7 +177,5 @@ public class ActivityFin extends AppCompatActivity {
                 break;
         }
         est.setImageDrawable(x);
-
     }
-
 }

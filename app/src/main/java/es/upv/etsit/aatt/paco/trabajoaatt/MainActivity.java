@@ -37,13 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner spinner_prov;
 
-
     private String id_prov, nm_prov;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_index_round);
 
@@ -119,20 +120,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         } catch (JSONException e) {
-            Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Se ha producido un error", Toast.LENGTH_LONG).show();
         }
     }
 
 
 
-    //Boton Next
+    //Boton SELECCIONAR
     public void Next (View view){
         Intent siguiente = new Intent(this, ActivityMun.class);
         siguiente.putExtra("Provincia",id_prov);
         siguiente.putExtra("Nombre",nm_prov);
         startActivity(siguiente);
     }
-
 
 
     //Peticion
@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Log.d(TAG, "responseCode: " + responseCode);
                 return null; // retorna null anticipadamente si hay algun problema
-
             }
 
 
@@ -176,8 +175,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return new String(response); // de StringBuffer -response- pasamos a String
-
     } // API_REST
-
-
 }

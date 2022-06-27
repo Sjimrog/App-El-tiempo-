@@ -26,34 +26,51 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ActivityMun extends AppCompatActivity {
 
-
     private static final String TAG = "API_REST";
 
     ArrayList<String> lista_mun = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter_mun;
     Spinner spinner_mun;
 
-
-    private String id_mun, id_P, nm_P,mun;
+    private String id_mun, id_P, nm_P, mun, provinciaElegida, idProvinciaElegida;
     private TextView tv_nm;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mun);
+
+        //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_index_round);
 
         id_P = getIntent().getStringExtra("Provincia");
         nm_P = getIntent().getStringExtra("Nombre");
+
+        provinciaElegida = getIntent().getStringExtra("ProvinciaElegida");
+        idProvinciaElegida = getIntent().getStringExtra("IdProvinciaElegida");
+
+        System.out.println("la id del inicia" + id_P);
+        System.out.println("la del inicia" + nm_P);
+        System.out.println("la del boton" + provinciaElegida);
+        System.out.println("la id del boton" + idProvinciaElegida);
+
+        //Elegimos segun si venimos de la ultima activity o de la primera
+        if(provinciaElegida == null){
+            id_P = id_P;
+            nm_P = nm_P;
+        }else {
+            id_P = idProvinciaElegida;
+            nm_P = provinciaElegida;
+        }
+
         tv_nm = (TextView)findViewById(R.id.tv_nm);
         tv_nm.setText("Estás en la provincia: " + nm_P);
+
         String urlMun = "https://raw.githubusercontent.com/IagoLast/pselect/master/data/municipios.json";
         ServiciosWebEncadenados2 servicioWeb2 = new ServiciosWebEncadenados2(urlMun);
         servicioWeb2.start();
     }
-
 
     class ServiciosWebEncadenados2 extends Thread {
 
@@ -65,91 +82,89 @@ public class ActivityMun extends AppCompatActivity {
         }
 
         // tarea a ejecutar en hilo paralelo e independiente
-
         @Override
         public void run() {
             // Gestiónese oportunamente las excepciones
             try {
                 // Primera peticion
-
                 final String respuesta2 = API_REST(url_inicial);
+
+                // Impresión de resultados en el hilo de la UI (User Interface thread): runOnUiThread
                 runOnUiThread(() -> ListMunicipio(respuesta2));
 
-
             } catch (Exception e) {
-                Toast.makeText(ActivityMun.this, "Se ha produciodo un ERROR 1 ", Toast.LENGTH_LONG).show();
+                Toast.makeText(ActivityMun.this, "Se ha producido un error", Toast.LENGTH_LONG).show();
             }
         } // run
+    }
 
-        //Obtener listado de municipios
-        public void ListMunicipio(String municipio) {
-            Log.i(TAG, "informacion");
+    //Obtener listado de municipios
+    public void ListMunicipio(String municipio) {
+        Log.i(TAG, "informacion");
 
-            spinner_mun = (Spinner) findViewById(R.id.spinner_mun);
+        spinner_mun = (Spinner) findViewById(R.id.spinner_mun);
 
-            int i = 0;
-            try { //En este caso al tener la id de la provincia sabemos que la del municipio empieza por esta, por lo que comparamos los inicios y los que cuadran se añaden a la lista
-                JSONArray arr2 = new JSONArray(municipio);
-                do {
-                    String num_mun = arr2.getJSONObject(i).getString("id");
-                    if (num_mun.equals(null)) {
+        int i = 0;
+        try { //En este caso al tener la id de la provincia sabemos que la del municipio empieza por esta, por lo que comparamos los inicios y los que cuadran se añaden a la lista
+            JSONArray arr2 = new JSONArray(municipio);
+            do {
+                String num_mun = arr2.getJSONObject(i).getString("id");
+
+                if (num_mun.equals(null)) {
+                    i += 1;
+                } else {
+                    if (id_P.equals(num_mun.substring(0, 2))) { //Comparación para añadir al spinner
+                        String prov = arr2.getJSONObject(i).getString("nm");
+                        lista_mun.add(prov);
                         i += 1;
                     } else {
-                        if (id_P.equals(num_mun.substring(0, 2))) { //Comparación para añadir
-                            String prov = arr2.getJSONObject(i).getString("nm");
-                            lista_mun.add(prov);
-                            i += 1;
-                        } else {
-                            i += 1;
-                        }
+                        i += 1;
                     }
+                }
 
-                } while (i < arr2.length());
+            } while (i < arr2.length());
 
-                arrayAdapter_mun = new ArrayAdapter<String>(ActivityMun.this, R.layout.spinner_item_info, lista_mun);
-                spinner_mun.setAdapter(arrayAdapter_mun);
+            arrayAdapter_mun = new ArrayAdapter<String>(ActivityMun.this, R.layout.spinner_item_info, lista_mun);
+            spinner_mun.setAdapter(arrayAdapter_mun);
 
 
-                //Seleccionamos la id del municipio selecionado
-                spinner_mun.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        try {
+            //Seleccionamos la id del municipio selecionado
+            spinner_mun.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        mun = lista_mun.get(position); //Con esto obtenemos el nombre del municipio obtenido
 
-                            mun = lista_mun.get(position); //Con esto obtenemos el nombre del municipio obtenido
-                            int i = 0;
-                            do {
-                                String municipio = arr2.getJSONObject(i).getString("nm");
+                        int i = 0;
+                        do {
+                            String municipio = arr2.getJSONObject(i).getString("nm");
 
-                                if (municipio.equals(mun)) { //Vamos comparando todos los municipios con el seleccionado hasta que cuadre
-                                    id_mun = arr2.getJSONObject(i).getString("id"); //una vez cuadrado sacamos la id del municipio sabiendo su posición
-                                    break;
+                            if (municipio.equals(mun)) { //Vamos comparando todos los municipios con el seleccionado hasta que cuadre
 
-                                } else {
-                                    i += 1;
+                                id_mun = arr2.getJSONObject(i).getString("id"); //una vez cuadrado sacamos la id del municipio sabiendo su posición
+                                break;
+                            } else {
+                                i += 1;
+                            }
 
-                                }
+                        } while (i < arr2.length());
 
-                            } while (i < arr2.length());
-
-                        } catch (JSONException e) {
-                            Toast.makeText(ActivityMun.this, "Se ha producido un error", Toast.LENGTH_SHORT).show();
-
-                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(ActivityMun.this, "Se ha producido un error", Toast.LENGTH_SHORT).show();
                     }
+                }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        Toast.makeText(ActivityMun.this, "Nothing Selected", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    Toast.makeText(ActivityMun.this, "Nothing Selected", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-
-            } catch (JSONException e) {
-                Toast.makeText(ActivityMun.this, "error", Toast.LENGTH_LONG).show();
-            }
+        } catch (JSONException e) {
+            Toast.makeText(ActivityMun.this, "Se ha producido un error", Toast.LENGTH_LONG).show();
         }
     }
+
 
 
     //Boton Next
@@ -158,6 +173,8 @@ public class ActivityMun extends AppCompatActivity {
         dias.putExtra("Id_Municipio", id_mun);
         dias.putExtra("Provincia", nm_P);
         dias.putExtra("Municipio", mun);
+        dias.putExtra("Id_provincia", id_P);
+        System.out.println(id_P + " pasamos id a siguiente activity");
         startActivity(dias);
     }
 
