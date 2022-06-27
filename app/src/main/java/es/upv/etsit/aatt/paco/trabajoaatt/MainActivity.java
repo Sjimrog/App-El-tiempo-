@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_index_round);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         String urlProv = "https://raw.githubusercontent.com/IagoLast/pselect/master/data/provincias.json";
         ServiciosWebEncadenados servicioWeb = new ServiciosWebEncadenados(urlProv);

@@ -25,7 +25,7 @@ public class ActivityFin extends AppCompatActivity {
 
         //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_index_round);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         tv1 = (TextView) findViewById(R.id.datoProvincia);
         tv2 = (TextView) findViewById(R.id.datoPueblo);

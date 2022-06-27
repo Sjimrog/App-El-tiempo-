@@ -53,7 +53,7 @@ public class ActivityDias extends AppCompatActivity {
 
         //Establecemos el logo en la action Bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_index_round);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_foreground);
 
         tv_lugar = (TextView)findViewById(R.id.tvlugar);
 
@@ -165,6 +165,7 @@ public class ActivityDias extends AppCompatActivity {
             }
 
             est_cielo[0] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getJSONArray("estadoCielo").getJSONObject(5).getString("descripcion");
+            dir_viento[0] = array.getJSONObject(0).getJSONObject("prediccion").getJSONArray("dia").getJSONObject(0).getJSONArray("viento").getJSONObject(5).getString("direccion");
 
             Imagenes(est_cielo[0], "LunEstado");
             Imagenes(est_cielo[1], "MarEstado");
